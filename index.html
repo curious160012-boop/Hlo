@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111722">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="mobile-web-app-capable" content="yes">
+<title>Comeback Protocol</title>
+<style>
+:root{--bg:#0d1119;--surface:#151d29;--surface2:#1c2735;--line:#2b3a4d;--ink:#f2f5fa;--muted:#9eacbf;--gold:#e4b668;--mint:#81d6a9;--red:#ed7b7d;--blue:#87b9f1}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(ellipse at 50% -20%,#283650,transparent 52%),var(--bg);min-height:100vh}
+.app{max-width:980px;margin:auto;padding:16px 14px 88px}.header{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{font-weight:950;letter-spacing:.08em;color:var(--gold);font-size:12px}.subtitle{color:var(--muted);font-size:12px}.title{font-size:27px;font-weight:900;letter-spacing:-.04em;margin:3px 0 0}.status{border:1px solid var(--line);border-radius:99px;padding:7px 10px;color:var(--muted);font-size:12px}
+.tabs{display:flex;gap:7px;overflow:auto;margin:16px 0}.tab{white-space:nowrap;border-radius:99px;padding:9px 13px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-weight:700}.tab.active{background:#73552c;border-color:#b18548;color:#ffe5b1}
+.page{display:none}.page.active{display:block}.card{background:linear-gradient(160deg,var(--surface),#141b25);border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:12px}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.cardhead h2{font-size:16px;margin:0}.tag{font-size:11px;color:var(--gold);border:1px solid #695334;border-radius:99px;padding:5px 8px}
+.players{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.player{border:1px solid var(--line);border-radius:14px;background:var(--surface2);padding:11px}.pname{font-size:14px;font-weight:850}.role{font-size:11px;color:var(--muted)}.level{font-size:12px;color:var(--gold);margin-top:7px}.progress{height:7px;background:#0c121a;border-radius:99px;overflow:hidden;margin:7px 0}.progress span{display:block;height:100%;background:linear-gradient(90deg,#65bd8e,#b3edc9);border-radius:99px}.tiny{font-size:11px;color:var(--muted)}
+input,select,textarea{width:100%;background:#0e151e;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px;font:inherit;outline:none}label{font-size:11px;color:var(--muted);display:block;margin:8px 0 5px}.formrow{display:grid;grid-template-columns:1fr 140px auto;gap:7px}.btn{border:1px solid var(--line);background:#263449;color:var(--ink);border-radius:10px;padding:9px 12px;font-weight:750;cursor:pointer}.btn.gold{background:#6c5129;border-color:#9b7643;color:#ffebc4}.btn.soft{background:transparent}.btn.red{background:#4a2933;border-color:#6e3b4b}.questlist{display:grid;gap:8px;margin-top:12px}.quest{display:grid;grid-template-columns:1fr auto;gap:9px;border:1px solid var(--line);border-radius:12px;padding:10px;background:#141c27}.quest.completed{opacity:.48}.quest.completed .qtitle{text-decoration:line-through}.qtitle{font-weight:750;font-size:13px}.qmeta{font-size:11px;color:var(--muted);margin-top:3px}.questbuttons{display:flex;align-items:center;gap:5px}.bossline{display:flex;align-items:center;justify-content:space-between}.hp{font-weight:900;color:var(--red)}.bossbar{height:15px;background:#0c121a;border-radius:99px;overflow:hidden;margin:10px 0}.bossbar span{height:100%;display:block;background:linear-gradient(90deg,#d64c61,#f39b6a);transition:width .2s}.mapgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.stage{padding:12px;border:1px solid var(--line);background:var(--surface2);border-radius:13px}.stage.locked{opacity:.45}.stageicon{font-size:22px}.stage h3{margin:5px 0;font-size:13px}.stage p{margin:0;color:var(--muted);font-size:11px}.badgegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.badgeitem{border:1px solid var(--line);border-radius:12px;padding:11px;text-align:center;background:var(--surface2)}.badgeitem .icon{font-size:22px}.badgeitem strong{font-size:11px;display:block;margin-top:4px}.badgeitem small{color:var(--muted);font-size:10px}.log{max-height:230px;overflow:auto}.logentry{font-size:12px;padding:7px 0;border-bottom:1px solid #253142;color:#c5cfdd}.bottomnav{position:fixed;bottom:0;left:0;right:0;padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:#101722ed;backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;justify-content:center}.bottomnav-inner{max-width:980px;width:100%;display:flex;justify-content:space-around}.navitem{border:0;background:none;color:var(--muted);font-size:11px;padding:7px;display:flex;flex-direction:column;align-items:center;gap:3px}.navitem.active{color:var(--gold)}.navitem span{font-size:19px}.empty{color:var(--muted);font-size:12px;padding:10px}.toast{position:fixed;top:15px;left:50%;transform:translateX(-50%);background:#243448;border:1px solid #425870;border-radius:12px;padding:11px 14px;z-index:99;display:none;box-shadow:0 10px 28px #0005;font-size:13px}
+@media(max-width:640px){.players{grid-template-columns:1fr}.player{display:grid;grid-template-columns:1fr auto;align-items:center}.player .progress,.player .tiny{grid-column:1/-1}.formrow{grid-template-columns:1fr 100px}.formrow .btn{grid-column:1/-1}.mapgrid{grid-template-columns:1fr 1fr}.app{padding-top:12px}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<main class="app">
+<header class="header"><div><div class="brand">3 PLAYERS · 1 PARTY · NO RESET</div><div class="title">COMEBACK PROTOCOL</div><div class="subtitle">Study RPG — recover momentum, clear quests, defeat the backlog.</div></div><div class="status" id="today"></div></header>
+<div class="tabs" id="tabs">
+<button class="tab active" data-page="home">🏰 Party</button><button class="tab" data-page="quests">⚔️ Quests</button><button class="tab" data-page="map">🗺️ Campaign</button><button class="tab" data-page="boss">🐉 Boss</button><button class="tab" data-page="guild">🏆 Guild</button>
+</div>
+<section class="page active" id="home">
+<div class="card"><div class="cardhead"><h2>Party roster</h2><span class="tag">Shared campaign</span></div><div class="players" id="players"></div></div>
+<div class="card"><div class="cardhead"><h2>Today's first move</h2><span class="tag">Comeback rule</span></div><p class="tiny">If you've fallen behind, your only job is to respawn. No catch-up punishment. Pick one quest and begin.</p><button class="btn gold" onclick="quickRespawn()">⚡ Add 20-minute respawn quest</button></div>
+<div class="card"><div class="cardhead"><h2>Recent guild activity</h2></div><div class="log" id="recentlog"></div></div>
+</section>
+<section class="page" id="quests">
+<div class="card"><div class="cardhead"><h2>Mission board</h2><span class="tag">Earn XP</span></div>
+<div class="formrow"><input id="questTitle" placeholder="Add mission (e.g. revise genetics)"><select id="questPlayer"></select><button class="btn gold" onclick="addQuest()">Add mission</button></div>
+<div class="formrow" style="margin-top:8px"><select id="quickQuest"><option value="">Quick mission…</option><option value="Respawn — 20 min focus|20|false">20-minute respawn · 20 XP</option><option value="Main quest: one planned topic|40|false">Main quest · 40 XP</option><option value="Backlog raid: clear one pending task|40|true">Backlog raid · 40 XP</option><option value="Teach a teammate one concept|15|false">Teach teammate · 15 XP</option><option value="Practice test + error analysis|30|false">Test & analyze · 30 XP</option><option value="Revise one old topic|20|true">Old topic revision · 20 XP backlog damage</option></select><select id="quickOwner"></select><button class="btn" onclick="addQuick()">Add quick</button></div>
+<div class="questlist" id="questList"></div></div>
+</section>
+<section class="page" id="map">
+<div class="card"><div class="cardhead"><h2>Campaign map</h2><span class="tag">Unlock by party XP</span></div><p class="tiny">Party progress unlocks chapters. XP is the sum of all players.</p><div class="mapgrid" id="stages"></div></div>
+<div class="card"><div class="cardhead"><h2>Weekly challenge</h2></div><label>Current team boss</label><input id="weeklyInput" placeholder="e.g. finish 2 backlog topics + group test"><div style="display:flex;gap:8px;margin-top:8px"><button class="btn" onclick="saveWeekly()">Save challenge</button><button class="btn gold" onclick="clearWeekly()">Clear weekly boss · +30 XP each</button></div><div class="tiny" id="weeklyStatus" style="margin-top:8px"></div></div>
+</section>
+<section class="page" id="boss">
+<div class="card"><div class="cardhead"><h2>Backlog boss</h2><span class="tag">Raid together</span></div><div class="bossline"><div class="tiny">THE MONSTER MADE OF PENDING WORK</div><div class="hp" id="bossHP"></div></div><div class="bossbar"><span id="bossBar"></span></div><div class="tiny" id="bossStatus"></div>
+<label>Boss HP</label><div class="formrow"><input id="bossAmount" type="number" min="50" step="50" placeholder="New boss health"><span></span><button class="btn" onclick="setBoss()">Set / spawn boss</button></div><p class="tiny">Complete a backlog quest to deal damage equal to the quest XP. Ordinary quests give XP without damage.</p><button class="btn soft" onclick="spawnNext()">Spawn next boss</button></div>
+</section>
+<section class="page" id="guild">
+<div class="card"><div class="cardhead"><h2>Guild scoreboard</h2><span class="tag">No shame leaderboard</span></div><div id="leaderboard"></div></div>
+<div class="card"><div class="cardhead"><h2>Achievements</h2></div><div class="badgegrid" id="achievements"></div></div>
+<div class="card"><div class="cardhead"><h2>Save & restore</h2></div><p class="tiny">This app stores progress on this device/browser. Export a backup to move your campaign between devices.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="exportSave()">Export save</button><label class="btn soft" style="margin:0">Import save<input type="file" id="importFile" accept=".json,application/json" hidden onchange="importSave(event)"></label><button class="btn red" onclick="resetGame()">Reset game</button></div></div>
+<div class="card"><div class="cardhead"><h2>Guild chronicle</h2></div><div class="log" id="fullLog"></div><button class="btn soft" onclick="clearLog()" style="margin-top:8px">Clear log</button></div>
+</section>
+</main>
+<nav class="bottomnav"><div class="bottomnav-inner"><button class="navitem active" data-page="home"><span>🏰</span>Party</button><button class="navitem" data-page="quests"><span>⚔️</span>Quests</button><button class="navitem" data-page="map"><span>🗺️</span>Map</button><button class="navitem" data-page="boss"><span>🐉</span>Boss</button><button class="navitem" data-page="guild"><span>🏆</span>Guild</button></div></nav>
+<script>
+const roles=["The Ghost · comeback specialist","The Chaos Mage · focus challenger","The Burdened Knight · backlog carrier"];
+const defaultState={players:[{name:"Player 1",xp:0,completed:0},{name:"Player 2",xp:0,completed:0},{name:"Player 3",xp:0,completed:0}],quests:[],boss:{max:300,hp:300},weekly:{text:"",cleared:false},log:[],weekStamp:""};
+let state;try{state=JSON.parse(localStorage.getItem("cp_app_save"))||structuredClone(defaultState)}catch(e){state=structuredClone(defaultState)}
+function persist(){localStorage.setItem("cp_app_save",JSON.stringify(state));render()}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function level(x){return Math.floor(x/250)+1}
+function toast(s){let el=document.getElementById("toast");el.textContent=s;el.style.display="block";setTimeout(()=>el.style.display="none",1900)}
+function log(s){state.log.unshift({time:new Date().toLocaleString(),msg:s});state.log=state.log.slice(0,50)}
+function partyXP(){return state.players.reduce((a,p)=>a+p.xp,0)}
+function render(){
+document.getElementById("today").textContent=new Date().toLocaleDateString(undefined,{month:"short",day:"numeric",weekday:"short"});
+const playerMarkup=state.players.map((p,i)=>{let lv=level(p.xp),cur=p.xp%250;return `<div class="player"><div><div class="role">${roles[i]}</div><input class="pname" value="${esc(p.name)}" data-ren="${i}" aria-label="Rename ${i+1}" style="padding:5px 7px;margin-top:3px"><div class="level">✦ ${p.xp} XP · Level ${lv}</div></div><div class="tiny">${cur}/250 to next</div><div class="progress"><span style="width:${cur/2.5}%"></span></div><div class="tiny">Quests cleared: ${p.completed}</div></div>`}).join("");
+document.getElementById("players").innerHTML=playerMarkup;
+document.querySelectorAll("[data-ren]").forEach(e=>e.onchange=()=>{let i=+e.dataset.ren;state.players[i].name=e.value.trim()||`Player ${i+1}`;log("Player renamed.");persist()});
+const opts=state.players.map((p,i)=>`<option value="${i}">${esc(p.name)}</option>`).join("");
+document.getElementById("questPlayer").innerHTML=opts;document.getElementById("quickOwner").innerHTML=opts;
+document.getElementById("questList").innerHTML=state.quests.length?state.quests.map((q,i)=>`<div class="quest ${q.done?"completed":""}"><div><div class="qtitle">${esc(q.title)}</div><div class="qmeta">${esc(state.players[q.owner].name)} · ${q.xp} XP${q.backlog?" · Backlog raid":""}</div></div><div class="questbuttons">${q.done?'<span class="tiny">Claimed</span>':`<button class="btn gold" onclick="completeQuest(${i})">Done</button>`}<button class="btn soft" onclick="deleteQuest(${i})">×</button></div></div>`).join(""):`<div class="empty">No quests. Add a mission to start your campaign.</div>`;
+const total=partyXP();let stages=[["🌱","The Restart","Wake the party up",0],["🗡️","Forest of Focus","Fight distractions",300],["📚","Backlog Caverns","Clear pending chapters",800],["🧪","Trial of Knowledge","Test and revise",1600],["🏰","Final Citadel","Full campaign showdown",3000]];
+document.getElementById("stages").innerHTML=stages.map(s=>{let unlocked=total>=s[3];return `<div class="stage ${unlocked?"":"locked"}"><div class="stageicon">${unlocked?s[0]:"🔒"}</div><h3>${s[1]}</h3><p>${s[2]}</p><p style="margin-top:5px">${unlocked?"UNLOCKED":"Unlock at "+s[3]+" party XP"}</p></div>`}).join("");
+let hp=Math.max(0,state.boss.hp),max=state.boss.max;document.getElementById("bossHP").textContent=`${hp} / ${max} HP`;document.getElementById("bossBar").style.width=(max?hp/max*100:0)+"%";document.getElementById("bossStatus").textContent=hp===0?"Boss defeated! Spawn the next one.":`${hp} HP remains. Backlog quests hit the boss for their XP amount.`;
+document.getElementById("weeklyInput").value=state.weekly.text||"";document.getElementById("weeklyStatus").textContent=state.weekly.cleared?"Weekly boss cleared! +30 XP each claimed.":"";
+const sorted=state.players.map((p,i)=>({...p,i})).sort((a,b)=>b.xp-a.xp);
+document.getElementById("leaderboard").innerHTML=sorted.map((p,i)=>`<div class="quest"><div><div class="qtitle">${["🥇","🥈","🥉"][i]} ${esc(p.name)}</div><div class="qmeta">Level ${level(p.xp)} · ${p.completed} quests</div></div><strong>${p.xp} XP</strong></div>`).join("");
+const ach=[["⚡","First Respawn","Complete any quest",state.players.some(p=>p.completed>=1)],["📖","Quest Collector","Complete 5 quests",state.players.some(p=>p.completed>=5)],["🛡️","Backlog Slayer","Deal 100 boss damage",state.boss.max-state.boss.hp>=100],["🤝","Party Power","All players earn XP",state.players.every(p=>p.xp>0)],["🌟","Level Up","Reach level 3",state.players.some(p=>level(p.xp)>=3)],["🏆","Weekly Warrior","Clear weekly challenge",state.weekly.cleared]];
+document.getElementById("achievements").innerHTML=ach.map(a=>`<div class="badgeitem" style="opacity:${a[3]?1:.35}"><div class="icon">${a[0]}</div><strong>${a[1]}</strong><small>${a[2]}</small></div>`).join("");
+const loghtml=state.log.length?state.log.map(x=>`<div class="logentry">${esc(x.time)} · ${esc(x.msg)}</div>`).join(""):`<div class="empty">Your story starts with the first quest.</div>`;
+document.getElementById("recentlog").innerHTML=loghtml.slice(0,3000);document.getElementById("fullLog").innerHTML=loghtml;
+}
+function addQuest(){let title=document.getElementById("questTitle").value.trim();if(!title)return toast("Write a mission first.");state.quests.push({title,owner:+document.getElementById("questPlayer").value,xp:30,backlog:/backlog|pending|missed|revision|revise/i.test(title),done:false});log("Mission posted: "+title);document.getElementById("questTitle").value="";persist();toast("Quest posted!")}
+function addQuick(){let v=document.getElementById("quickQuest").value;if(!v)return;let [title,xp,backlog]=v.split("|");state.quests.push({title,owner:+document.getElementById("quickOwner").value,xp:+xp,backlog:backlog==="true",done:false});log("Quick quest posted: "+title);persist();toast("Quick quest added!")}
+function quickRespawn(){state.quests.push({title:"Respawn — 20 minutes of focus",owner:0,xp:20,backlog:false,done:false});log("Respawn quest added for Player 1.");persist();toast("Respawn quest ready — choose a player on the quest board to reassign if needed.")}
+function completeQuest(i){let q=state.quests[i];if(!q||q.done)return;q.done=true;let p=state.players[q.owner];p.xp+=q.xp;p.completed++;if(q.backlog){state.boss.hp=Math.max(0,state.boss.hp-q.xp);log(`${p.name} cleared "${q.title}" and dealt ${q.xp} boss damage.`)}else log(`${p.name} completed "${q.title}" and earned ${q.xp} XP.`);persist();toast(`Quest complete! +${q.xp} XP`)}
+function deleteQuest(i){state.quests.splice(i,1);persist()}
+function setBoss(){let n=+document.getElementById("bossAmount").value;if(n<50)return toast("Boss needs at least 50 HP.");state.boss={max:n,hp:n};log("Backlog boss set to "+n+" HP.");persist();toast("Boss spawned!")}
+function spawnNext(){let n=+document.getElementById("bossAmount").value||state.boss.max||300;state.boss={max:n,hp:n};log("Next backlog boss spawned at "+n+" HP.");persist();toast("Next boss spawned.")}
+function saveWeekly(){state.weekly={text:document.getElementById("weeklyInput").value.trim(),cleared:false};log("Weekly challenge updated.");persist();toast("Challenge saved.")}
+function clearWeekly(){if(state.weekly.cleared)return toast("Already cleared this week.");state.players.forEach(p=>p.xp+=30);state.weekly.cleared=true;log("Team cleared weekly boss. +30 XP to every player.");persist();toast("Weekly boss defeated!")}
+function exportSave(){let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="comeback-protocol-save.json";a.click();URL.revokeObjectURL(url)}
+function importSave(e){let f=e.target.files[0];if(!f)return;let reader=new FileReader();reader.onload=()=>{try{let v=JSON.parse(reader.result);if(v.players?.length===3&&Array.isArray(v.quests)){state=v;log("Save imported.");persist();toast("Save imported")}else alert("Invalid Comeback Protocol save.")}catch{alert("Could not read save file.")}};reader.readAsText(f);e.target.value=""}
+function resetGame(){if(confirm("Reset your entire campaign? Export a save first if you want a backup.")){state=structuredClone(defaultState);persist();toast("Campaign reset")}}
+function clearLog(){state.log=[];persist()}
+function showPage(id){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));document.querySelectorAll("[data-page]").forEach(t=>t.classList.toggle("active",t.dataset.page===id));window.scrollTo({top:0,behavior:"smooth"});}
+document.querySelectorAll("[data-page]").forEach(t=>t.onclick=()=>showPage(t.dataset.page));
+render();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+</script>
+</body>
+</html>
